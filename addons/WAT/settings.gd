@@ -2,7 +2,6 @@ extends Reference
 tool
 
 static func initialize() -> void:
-	push_warning("You may change any setting for WAT in Project -> ProjectSettings -> General -> WAT")
 	_add_setting("Test_Directory", TYPE_STRING, "res://tests")
 	_add_setting("Results_Directory", TYPE_STRING, "res://tests")
 	_add_setting("Test_Metadata_Directory", TYPE_STRING, "res://tests")

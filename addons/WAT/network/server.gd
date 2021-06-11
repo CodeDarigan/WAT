@@ -18,7 +18,7 @@ func host() -> void:
 	var err: int = _server.create_server(ProjectSettings.get_setting("WAT/Port"))
 	_server.allow_object_decoding = true
 	if err != OK:
-		push_warning(err as String)
+		push_warning("Error creating server : %s" % err as String)
 	custom_multiplayer.network_peer = _server
 	custom_multiplayer.connect("network_peer_connected", self, "_on_peer_connected")
 	

@@ -12,7 +12,7 @@ func join() -> void:
 	var err: int = _client.create_client(IPAddress, ProjectSettings.get_setting("WAT/Port"))
 	_client.allow_object_decoding = true
 	if err != OK:
-		push_warning(err as String)
+		push_warning("Error creating client : %s" % err as String)
 	custom_multiplayer.connect("connection_failed", self, "_on_connection_failed")
 	custom_multiplayer.network_peer = _client
 	

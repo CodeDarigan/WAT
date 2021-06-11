@@ -31,8 +31,9 @@ static func write(results, time: float = 0.0) -> void:
 		output += "\n\t</testsuite>\n"
 	output += '\n</testsuites>'
 	var XML = File.new()
-	var err = XML.open("%s/results.xml" % path, File.WRITE)
+	var xml_file: String = "%s/results.xml" % path
+	var err = XML.open(xml_file, File.WRITE)
 	if err:
-		push_warning(err as String)
+		push_warning("Error saving result xml to %s : %s" % [xml_file, err as String])
 	XML.store_string(output)
 	XML.close()

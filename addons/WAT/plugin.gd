@@ -73,13 +73,13 @@ func _on_function_selected(file: String, function: String) -> void:
 
 func _initialize_metadata() -> void:
 	# Check if file exists!
-	var path: String = ProjectSettings.get_setting("WAT/Test_Metadata_Directory")
-	if Directory.new().file_exists(path + "/test_metadata.json"):
+	var path: String = ProjectSettings.get_setting("WAT/Test_Metadata_Directory") + "/test_metadata.json"
+	if Directory.new().file_exists(path):
 		return
 	var file: File = File.new()
-	var err: int = file.open(path + "/test_metadata.json", File.WRITE)
+	var err: int = file.open(path, File.WRITE)
 	if err != OK:
-		push_warning(err as String)
+		push_warning("Error saving test metadata to %s : %s" % [path, err as String])
 		return
 	file.store_string("{}")
 	file.close()

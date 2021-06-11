@@ -23,7 +23,7 @@ func _discover(path: String = Settings.test_directory()) -> Array:
 	var dir: Directory = Directory.new()
 	var err: int = dir.open(path)
 	if err != OK:
-		push_error("%s : %s " % [path, err as String])
+		push_error("Error discovering tests in %s : %s " % [path, err as String])
 		return []
 	dir.list_dir_begin(true)
 	var current_name = dir.get_next()
@@ -50,22 +50,22 @@ func _discover(path: String = Settings.test_directory()) -> Array:
 	return scripts
 	
 func _get_metadata() -> Dictionary:
-	var path: String = ProjectSettings.get_setting("WAT/Test_Metadata_Directory")
+	var path: String = ProjectSettings.get_setting("WAT/Test_Metadata_Directory") + "/test_metadata.json"
 	var file: File = File.new()
-	var err: int = file.open(path + "/test_metadata.json", File.READ)
+	var err: int = file.open(path, File.READ)
 	if err != OK:
-		push_warning(err as String)
+		push_warning("Error loading test metadata from %s : %s" % [path, err as String])
 		return {}
 	var metadata: Dictionary = JSON.parse(file.get_as_text()).result
 	file.close()
 	return metadata
 	
 func save(data: Dictionary) -> void:
-	var path: String = ProjectSettings.get_setting("WAT/Test_Metadata_Directory")
+	var path: String = ProjectSettings.get_setting("WAT/Test_Metadata_Directory") + "/test_metadata.json"
 	var file: File = File.new()
-	var err: int = file.open(path + "/test_metadata.json", File.WRITE)
+	var err: int = file.open(path, File.WRITE)
 	if err != OK:
-		push_warning(err as String)
+		push_warning("Error saving test metadata to %s : %s" % [path, err as String])
 	for test in data.scripts:
 		var value = data.scripts[test]
 		value.erase("script")
